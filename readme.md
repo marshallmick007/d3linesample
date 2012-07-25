@@ -6,6 +6,7 @@ svg.
 
 ## Requirements
 
+- [Sinatra](sinatrarb.com)
 - [LESS](http://lesscss.org)
 - [CoffeeScript](http://www.coffeescript.org)
 - [d3.js](http://d3js.org)

@@ -1,0 +1,10 @@
+
+.gradient(@from, @to) {
+  background: url( imagefallback.png ) repeat-x @to;
+  background: -moz-radial-gradient(center, ellipse cover, @from 22%, @to 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(22%,@from), color-stop(100%,@to));
+  background: -webkit-radial-gradient(center, ellipse cover, @from 22%,@to 100%);
+  background: -o-radial-gradient(center, ellipse cover, @from 22%,@to 100%);
+  background: -ms-radial-gradient(center, ellipse cover, @from 22%,@to 100%);
+  background: radial-gradient(center, ellipse cover, @from 22%,@to 100%);
+}

@@ -1,0 +1,112 @@
+@import "reset";
+@import "mixins";
+
+@site-width: 960px;
+
+@header-nav-height: 30px;
+@header-nav-bg-color: #EEE;
+@header-nav-color: #111;
+
+@footer-height: 30px;
+@footer-bg-color: #DDD;
+@footer-color: #222;
+
+
+// From: http://blog.12spokes.com/web-design-development/simple-css-color-management-with-sass/
+
+@brand-color: #DAD311;
+@action-color: #76B715;
+@function-color: #f2f2f2;
+@alert-color: #b22727;
+
+@brand-color-light: lighten(@brand-color, 10%);
+@brand-color-lighter: lighten(@brand-color, 20%);
+@brand-color-dark: darken(@brand-color, 10%);
+
+@action-color-light: lighten(@action-color, 10%);
+@action-color-lighter: lighten(@action-color, 20%);
+@action-color-dark: darken(@action-color, 10%);
+
+@function-color-light: lighten(@function-color, 10%);
+@function-color-lighter: lighten(@function-color, 20%);
+@function-color-dark: darken(@function-color, 10%);
+
+@alert-color-light: lighten(@alert-color, 10%);
+@alert-color-lighter: lighten(@alert-color, 20%);
+@alert-color-dark: darken(@alert-color, 10%);
+
+
+
+body {
+  text-align: center;
+}
+
+h1, h1, h3, h4 {
+  font-weight: bold;
+}
+
+#topbar {
+  text-align: left;
+  height: @header-nav-height;
+
+  line-height: @header-nav-height;
+  width: 100%;
+  background-color: @brand-color;
+  //.gradient(@brand-color,@brand-color-dark);
+  color: @header-nav-color;
+
+  ul {
+    padding: 0px 10px;
+    li {
+      display: inline;
+      padding-right: 20px;
+    }
+  }
+}
+
+// Main Container for the page
+#container {
+  width: @site-width;
+  text-align: left;
+  margin: 20px auto;
+  header {
+    nav {
+
+    }
+    h1 {
+      font-size: 1.3em;
+    }
+  }
+
+  // Main Content
+  #main {
+    h2 {
+      font-size: 1.1em;
+    }
+  }
+
+  // Main Container footer
+  footer {
+    width: @footer-height;
+    background-color: @footer-bg-color;
+    color: @footer-color;
+  }
+}
+
+//*= D3 / svg styles
+
+path {
+    stroke: @alert-color;
+    stroke-width: 2;
+    fill: none;
+}
+ 
+line {
+    stroke: black;
+}
+ 
+text {
+    font-family: Arial;
+    font-size: 9pt;
+}
+

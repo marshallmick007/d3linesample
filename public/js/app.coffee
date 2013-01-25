@@ -1,12 +1,12 @@
 #require "./d3shim.js"
 #https://github.com/vlandham/vlandham.github.com/blob/master/vis/coffee/nationality_by_city.coffee
-#
+# http://visualizationtools.net/default/d3linechart/
 class MMGraph
   constructor: ->
     @lineGroup = null
     @now = new Date()
     @data = [
-      {date: new Date(2012, @now.getMonth(), @now.getDate(), @now.getHours(), @now.getMinutes()-10, 0), measure: 3.2},
+      {date: new Date(2012, @now.getMonth(), @now.getDate(), @now.getHours(), @now.getMinutes()-3, 0), measure: 3.2},
       {date: new Date(2012, @now.getMonth(), @now.getDate(), @now.getHours(), @now.getMinutes(), 0), measure: 3.2}
       
 
@@ -44,25 +44,42 @@ class MMGraph
   yAxisLabel: (d) ->
     d
 
-
   computeY: (d) =>
+    @computeYraw(d.measure)
+
+  computeYraw: (d) =>
     @now = new Date()
-    if d.measure > 60
-      new Date(@now.getYear(),@now.getMonth(),@now.getDate(),0,0, 120 - d.measure)
+    if d > 60
+      new Date(@now.getYear(),@now.getMonth(),@now.getDate(),0,0, 120 - d)
     else
-      new Date(@now.getYear(),@now.getMonth(),@now.getDate(),0,1, 60 - d.measure)
+      new Date(@now.getYear(),@now.getMonth(),@now.getDate(),0,1, 60 - d)
+
+  computeYscale: (d) =>
+    @now = new Date()
+    if d > 60
+      new Date(@now.getYear(),@now.getMonth(),@now.getDate(),0,0, 120 - d)
+    else
+      new Date(@now.getYear(),@now.getMonth(),@now.getDate(),0,1, 60 - d)
 
   setScale: =>
+    m = d3.max( @data, (d) -> d.measure )
+    dm = @computeYscale(m)
+    console.log(m)
+    console.log(dm)
+    @yAxisScale = m / 7
+    @totalSeconds = m + 8
+    old = new Date(@now.getYear(),@now.getMonth(),@now.getDate(),0,2,0)
+    console.log(old)
+    dm = old
     @x = d3.time.scale()
         .domain([@data[0].date, @data[@data.length-1].date])
         .range([0, @width])
     @y = d3.time.scale()
-        .domain([new Date(@now.getYear(),@now.getMonth(),@now.getDate(),0,0,0), new Date(@now.getYear(),@now.getMonth(),@now.getDate(),0,2,0)])
+        .domain([new Date(@now.getYear(),@now.getMonth(),@now.getDate(),0,0,0), dm])
         .range([0, @height])
 
 
   start: =>
-
     @now = new Date()
     # Add our SVG to the DOM
     if not @vis
@@ -91,7 +108,7 @@ class MMGraph
       .attr("class", "yTicks")
 
     @axg.selectAll(".xTicks")
-      .data(d3.range(0, @data.length).map( (i) => @data[i].date ) )
+      .data(d3.range(0, @data.length ).map( (i) => @data[i].date ) )
       .enter().append("svg:line")
       .attr("x1", @x)
       .attr("y1", -5)
@@ -101,7 +118,7 @@ class MMGraph
       .attr("class", "xTicks")
 
     @axg.selectAll(".xLabel")
-      .data(d3.range(0, @data.length).map( (i) => @data[i].date ) )
+      .data(d3.range(0, @data.length ).map( (i) => @data[i].date ) )
       .enter()
       .append("svg:text")
       .text((d,i) => @data[i].date.getMinutes() )
